@@ -3,9 +3,14 @@
 #include <esp_heap_caps.h>
 
 #include "maze/maze_game.cpp"
+// #include "fractal/fractal.cpp"
 #include "config.h"
 
 TFT_eSPI tft = TFT_eSPI();
+JoyStick joystick;
+
+// Fractal fractal = Fractal(tft, joystick);
+MazeGame mazeGame = MazeGame(tft, joystick);
 
 void setup() {
   pinMode(PIN_X, INPUT);
@@ -17,7 +22,8 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setTextSize(1);
 
-  start(tft);
+  // fractal.start();
+  mazeGame.start();
 }
 
 void loop() {

@@ -5,8 +5,8 @@
 #define MAX_DEPTH 5
 #define MIN_DISTANCE 0.15f
 #define STEP_SIZE 0.1f
-#define MOVE_SPEED 0.05f
-#define ROTATE_SPEED 0.05f
+#define MOVE_SPEED 0.01f
+#define ROTATE_SPEED 0.02f
 #define SEGMENTS 32
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
