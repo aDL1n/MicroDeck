@@ -40,7 +40,7 @@
 #define TFT_SCLK 18
 #define TFT_CS   17
 #define TFT_DC   16
-#define TFT_RST  -1
+#define TFT_RST  22
 ```
 
 ### 3. Загрузка прошивки
