@@ -35,7 +35,7 @@ void Menu::draw()
     }
 }
 
-void Menu::onUp()
+void Menu::up()
 {
     if (selected == 0)
         selected = 2;
@@ -44,7 +44,7 @@ void Menu::onUp()
     draw();
 }
 
-void Menu::onDown()
+void Menu::down()
 {
     if (selected == 2)
         selected = 0;
@@ -52,40 +52,3 @@ void Menu::onDown()
         selected++;
     draw();
 }
-
-// void Menu::onSelect()
-// {
-//     switch (selected)
-//     {
-//     case 2:
-//         tft.fillScreen(TFT_BLACK);
-//         tft.setTextColor(TFT_WHITE);
-//         tft.drawString("Shut down...", tft.width() / 2, tft.height() / 2);
-//         delay(1500);
-//         esp_deep_sleep_start();
-//         break;
-//     case 0:
-//         MazeGame maze = MazeGame(tft);
-//         JoystickInput joystick = JoystickInput();
-
-//         while(1) 
-//         {   
-//             if (ButtonsInput.readA()) {
-//                 maze.exit();
-//                 ~maze();
-//                 break;
-//             }
-//             maze.processInput(joystick.readX(), joystick.readY());
-//             maze.loop();
-//         }
-//         break;
-//     default:
-//         tft.fillScreen(TFT_BLACK);
-//         tft.setTextColor(TFT_WHITE);
-//         tft.drawString(String("Selected: ") + items[selected], tft.width() / 2, tft.height() / 2);
-//         delay(1000);
-//         tft.fillScreen(TFT_BLACK);
-//         draw();
-//         break;
-//     }
-// }

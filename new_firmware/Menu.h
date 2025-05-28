@@ -5,7 +5,7 @@ class Menu
 {
 private:
     TFT_eSPI &tft;
-    const char *items[3] = {"Maze", "Info", "Shut down"};
+    const char *items[4] = {"Maze", "Snake", "Info", "Shut down"};
     
 
 public:
@@ -17,7 +17,6 @@ public:
     uint8_t selected = 0;
 
     void draw();
-    void onUp();
-    void onDown();
-    // void onSelect();
+    void up();
+    void down();
 };

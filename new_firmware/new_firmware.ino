@@ -3,6 +3,7 @@
 #include "JoyStick.h"
 #include "Buttons.h"
 #include "maze_game.h"
+#include "snake.h"
 
 #define JOY_X_PIN 25
 #define JOY_Y_PIN 26
@@ -24,10 +25,10 @@ void menu() {
     if (now - lastMoveTime > debounceDelay) {
       int move = joystick.readY();
       if (move == 1) {
-        mainMenu.onUp();
+        mainMenu.up();
         lastMoveTime = now;
       } else if (move == -1) {
-        mainMenu.onDown();
+        mainMenu.down();
         lastMoveTime = now;
       }
     }
@@ -41,6 +42,7 @@ void menu() {
           {   
               if (buttons.readA()) {
                   maze.exit();
+                  mainMenu.draw();
                   break;
               }
               maze.processInput(joystick.readX(), joystick.readY());
@@ -49,21 +51,36 @@ void menu() {
           break;
         }
         case 1: {
-          bool info = true;
+          SnakeGame snake(tft);
+
+          snake.start();
+          while(1)
+          {  
+            if (buttons.readB()) {
+              tft.fillScreen(TFT_BLACK);
+              mainMenu.draw();
+              break;
+            }
+            snake.loop();
+          }
+          
+          break;
+        }
+        case 2: {
           tft.fillScreen(TFT_BLACK);
           tft.drawString("Info", tft.width() / 2, 14);
 
           tft.setTextColor(TFT_WHITE, TFT_BLACK);
           tft.drawString("Firmware: 0.1", 82, 60);
 
-          delay(10000);
+          delay(8000);
           tft.fillScreen(TFT_BLACK);
           tft.setTextColor(TFT_WHITE, TFT_CYAN);
           mainMenu.draw();
           break;
         }  
 
-        case 2: {
+        case 3: {
           tft.fillScreen(TFT_BLACK);
           tft.setTextColor(TFT_WHITE);
           tft.drawString("Shut down...", tft.width() / 2, tft.height() / 2);
@@ -73,10 +90,6 @@ void menu() {
         }
       }
     }
-
-    // if (buttons.readA()) {
-    //   mainMenu.onSelect();
-    // }
 
     delay(40);
   }
