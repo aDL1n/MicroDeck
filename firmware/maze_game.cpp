@@ -3,6 +3,12 @@
 #include <math.h>
 #include <string.h>
 
+float readAxis(uint8_t axis_pin) {
+    int value = analogRead(axis_pin);
+    float normalized = -2.0f * (4096 / 2 - value) / 4096;
+    return (fabs(normalized) > 0.4) ? normalized : 0.0f;
+}
+
 MazeGame::MazeGame(TFT_eSPI &display)
     : m_tft(display),
       m_position{PLAYER_START_X, PLAYER_START_Y},
@@ -19,7 +25,7 @@ MazeGame::~MazeGame()
 void MazeGame::loop()
 {
     
-    processInput();
+    // processInput();
     castRays();
     renderWalls();
     
@@ -27,11 +33,11 @@ void MazeGame::loop()
 
 void MazeGame::processInput(uint8_t x, uint8_t y)
 {
-    // float move = m_joystick.readAxis(PIN_X);
-    // float rotate = m_joystick.readAxis(PIN_Y);
+    float move = readAxis(26);
+    float rotate = readAxis(25);
 
-    float newX = m_position.x + cos(m_viewAngle) * x * MOVE_SPEED;
-    float newY = m_position.y + sin(m_viewAngle) * x * MOVE_SPEED;
+    float newX = m_position.x + cos(m_viewAngle) * move * MOVE_SPEED;
+    float newY = m_position.y + sin(m_viewAngle) * move * MOVE_SPEED;
 
     if (mapGrid[(int)newY][(int)newX] == 0)
     {
@@ -39,7 +45,7 @@ void MazeGame::processInput(uint8_t x, uint8_t y)
         m_position.y = newY;
     }
 
-    m_viewAngle += y * ROTATE_SPEED;
+    m_viewAngle += rotate * ROTATE_SPEED;
     m_viewAngle = fmod(m_viewAngle, 2 * PI);
     if (m_viewAngle < 0)
         m_viewAngle += 2 * PI;
@@ -117,11 +123,14 @@ void MazeGame::resetDisplay()
         col.top = SCREEN_HEIGHT;
         col.bottom = 0;
     }
+    m_tft.fillScreen(TFT_BLACK);
 }
 
 void MazeGame::exit()
 {
     m_tft.fillScreen(TFT_BLACK);
-    m_tft.setCursor(0, 0);
-    m_tft.println("Game Exited");
+    // m_tft.setCursor(0, 0);
+    // m_tft.println("Game Exited");
+    // delay(300);
+    resetDisplay();
 }

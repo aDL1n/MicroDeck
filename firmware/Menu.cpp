@@ -38,7 +38,7 @@ void Menu::draw()
 void Menu::up()
 {
     if (selected == 0)
-        selected = 2;
+        selected = std::size(items) - 1;
     else
         selected--;
     draw();
@@ -46,7 +46,7 @@ void Menu::up()
 
 void Menu::down()
 {
-    if (selected == 2)
+    if (selected == std::size(items) - 1)
         selected = 0;
     else
         selected++;

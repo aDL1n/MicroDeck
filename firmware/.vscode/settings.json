@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "xutility": "cpp",
         "cstdint": "cpp"
     }
 }
